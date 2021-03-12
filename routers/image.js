@@ -21,4 +21,15 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+//get one specific image by its Id:
+router.get("/:imageId", async (req, res, next) => {
+  try {
+    const imageId = parseInt(req.params.imageId);
+    const specificImage = await Image.findByPk(imageId);
+    res.json(specificImage);
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;

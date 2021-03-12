@@ -12,4 +12,25 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+//create a new user:
+router.post("/", async (req, res, next) => {
+  console.log("adding");
+  try {
+    const { email, password, fullName } = req.body;
+    if (!email || !password || !fullName) {
+      res.status(400).send("missing parameters");
+    } else {
+      const newUser = await User.create({
+        email,
+        password,
+        fullName,
+      });
+      console.log(newUser);
+      res.json(newUser);
+    }
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;
