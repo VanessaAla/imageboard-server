@@ -6,7 +6,7 @@ const router = new Router();
 
 router.get("/", async (req, res, next) => {
   const limit = Math.min(req.query.limit || 25, 500); //limit indicates how many results are on a page.
-  const offset = req.query.offset || 0; ////how many results to skip
+  const offset = req.query.offset || 0; //how many results to skip
   try {
     const result = await Image.findAndCountAll({ limit, offset });
     res.send({ images: result.rows, total: result.count });
@@ -16,14 +16,14 @@ router.get("/", async (req, res, next) => {
 });
 
 //read my images:
-//router.get("/", async (req, res, next) => {
-//try {
-//const images = await Image.findAll();
-// res.json(images);
-// } catch (e) {
-// next(e);
-// }
-//});
+/*router.get("/", async (req, res, next) => {
+try {
+const images = await Image.findAll();
+ res.json(images);
+ } catch (e) {
+ next(e);
+ }
+});*/
 
 router.post("/", async (req, res, next) => {
   try {

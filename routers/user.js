@@ -23,7 +23,7 @@ router.post("/", async (req, res, next) => {
     } else {
       const newUser = await User.create({
         email,
-        password: bcrypt.hashSync(password, 10), //// Here, when handing down the password to the create method we hash it.
+        password: bcrypt.hashSync(password, 10), // Here, when handing down the password to the create method we hash it.
         fullName,
       });
       //console.log(newUser);
