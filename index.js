@@ -3,10 +3,11 @@ const userRouter = require("./routers/user");
 const imageRouter = require("./routers/image");
 const jsonParser = express.json();
 
-app.use(jsonParser);
-
 const PORT = process.env.PORT || 4000;
 const app = express();
+
+//Middleware:
+app.use(jsonParser);
 
 //Routers:
 app.use("/users", userRouter);
