@@ -45,7 +45,7 @@ router.post("/", async (req, res, next) => {
   }
 });*/
 
-router.get("/messy", async (req, res, next) => {
+/*router.get("/messy", async (req, res, next) => {
   const auth =
     req.headers.authorization && req.headers.authorization.split(" ");
   if (auth && auth[0] === "Bearer" && auth[1]) {
@@ -63,6 +63,6 @@ router.get("/messy", async (req, res, next) => {
       message: "Please supply some valid credentials",
     });
   }
-});
+});*/
 
 module.exports = router;
