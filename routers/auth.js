@@ -16,8 +16,11 @@ router.post("/login", async (req, res, next) => {
     if (!user) {
       res.status(404).send({ message: "User not found" });
     } else {
+      console.log("user.password ", user.password);
+      console.log("password test ", password);
       const userPassword = user.password;
       const result = bcrypt.compareSync(password, userPassword);
+      console.log("result test: ", result);
       if (result) {
         res.send({ jwt: toJWT({ userId: user.id }) });
       } else {

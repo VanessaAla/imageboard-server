@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { toData } = require("../auth/jwt");
 const Image = require("../models").image;
 
 const router = new Router();
@@ -15,14 +16,14 @@ router.get("/", async (req, res, next) => {
 });
 
 //read my images:
-router.get("/", async (req, res, next) => {
-  try {
-    const images = await Image.findAll();
-    res.json(images);
-  } catch (e) {
-    next(e);
-  }
-});
+//router.get("/", async (req, res, next) => {
+//try {
+//const images = await Image.findAll();
+// res.json(images);
+// } catch (e) {
+// next(e);
+// }
+//});
 
 router.post("/", async (req, res, next) => {
   try {
@@ -34,13 +35,33 @@ router.post("/", async (req, res, next) => {
 });
 
 //get one specific image by its Id:
-router.get("/:imageId", async (req, res, next) => {
+/*router.get("/:imageId", async (req, res, next) => {
   try {
     const imageId = parseInt(req.params.imageId);
     const specificImage = await Image.findByPk(imageId);
     res.json(specificImage);
   } catch (e) {
     next(e);
+  }
+});*/
+
+router.get("/messy", async (req, res, next) => {
+  const auth =
+    req.headers.authorization && req.headers.authorization.split(" ");
+  if (auth && auth[0] === "Bearer" && auth[1]) {
+    try {
+      console.log(auth);
+      const data = toData(auth[1]);
+      console.log(data);
+    } catch (e) {
+      res.status(400).send("Invalid JWT token");
+    }
+    const allImages = await Image.findAll();
+    res.json(allImages);
+  } else {
+    res.status(401).send({
+      message: "Please supply some valid credentials",
+    });
   }
 });
 
