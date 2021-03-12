@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const Router = require("express").Router;
 const User = require("../models").user;
 
@@ -14,7 +15,7 @@ router.get("/", async (req, res, next) => {
 
 //create a new user:
 router.post("/", async (req, res, next) => {
-  console.log("adding");
+  //console.log("adding");
   try {
     const { email, password, fullName } = req.body;
     if (!email || !password || !fullName) {
@@ -22,10 +23,10 @@ router.post("/", async (req, res, next) => {
     } else {
       const newUser = await User.create({
         email,
-        password,
+        password: bcrypt.hashSync(password, 10), //// Here, when handing down the password to the create method we hash it.
         fullName,
       });
-      console.log(newUser);
+      //console.log(newUser);
       res.json(newUser);
     }
   } catch (e) {
